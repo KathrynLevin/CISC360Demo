@@ -1,24 +1,17 @@
 #include <stdio.h>
 #include <math.h>
 #include <time.h>
-//edited from http://cforbeginners.com/insertionsort.html
 
 float permutation_invertion (int arr[], int length){
-  int i,j, temp;
+  int i;
+  int step = length/1000;
   int value=0;
-  for (i = 0; i < length; i++){
-    j = i;
-    
-    while (j > 0 && arr[j] < arr[j-1]){
+  for (i = 0; i < length-step; i+=step){
+    if ( arr[i]>arr[i+step] )
       value++;
-      temp = arr[j];
-      arr[j] = arr[j-1];
-      arr[j-1] = temp;
-      j--;
-    }
   }
   
-  return (float)value*2/((float)(length)*(length-1));
+  return value/(float) 1000;
 }
 //from http://cforbeginners.com/insertionsort.html
 void insertion_sort (int arr[], int length){
@@ -128,7 +121,7 @@ void oursort(int arr[],int length){
   if(length<2000)
     ShellSort(arr,length);
   else{
-    float pi=permutation_invertion(arr,1000);
+    float pi=permutation_invertion(arr,length);
     if(pi<.1)
       insertion_sort(arr,length);
     else if (pi>.9)
