@@ -2,16 +2,16 @@
 #include <math.h>
 #include <time.h>
 
-float permutation_invertion (int arr[], int length){
+float permutation_invertion (int arr[], int length,int size){
   int i;
-  int step = length/1000;
+  int step = length/size;
   int value=0;
   for (i = 0; i < length-step; i+=step){
     if ( arr[i]>arr[i+step] )
       value++;
   }
   
-  return value/(float) 1000;
+  return value/(float) (size-1);
 }
 //from http://cforbeginners.com/insertionsort.html
 void insertion_sort (int arr[], int length){
@@ -121,7 +121,7 @@ void oursort(int arr[],int length){
   if(length<2000)
     ShellSort(arr,length);
   else{
-    float pi=permutation_invertion(arr,length);
+    float pi=permutation_invertion(arr,length,1000);
     if(pi<.1)
       insertion_sort(arr,length);
     else if (pi>.9)
@@ -136,9 +136,9 @@ int main(int argc, char *argv[]){
   int reversed[10]={9,8,7,6,5,4,3,2,1,0}; 
   int random[10]={5,8,1,3,2,9,4,7,0,6}; 
   int random2[10]={5,8,1,3,2,9,4,7,0,6}; 
-  printf("%f\n",permutation_invertion(sorted,10));
-  printf("%f\n",permutation_invertion(reversed,10));
-  printf("%f\n",permutation_invertion(random,10));
+  printf("%f\n",permutation_invertion(sorted,10,10));
+  printf("%f\n",permutation_invertion(reversed,10,10));
+  printf("%f\n",permutation_invertion(random,10,10));
   clock_t begin, end;
   double time_spent;
 
