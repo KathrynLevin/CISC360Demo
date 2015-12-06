@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <time.h>
-
+#include <stdlib.h>
 float permutation_invertion (int arr[], int length,int size){
   int i;
   int step = length/size;
@@ -130,23 +130,58 @@ void oursort(int arr[],int length){
       heapsort(arr,length);
   }
 }
+int* makeOrdered(int length){
+  int* arr=(int*)malloc(sizeof(int)*length);
+  int i;
+  for(i=0;i<length;i++) 
+    { 
+      arr[i] = i;  
+    } 
+  return arr;
+}
+int* makeReversed(int length){
+  int* arr=(int*)malloc(sizeof(int)*length);
+  int i;
+  for(i=0;i<length;i++) 
+    { 
+      arr[i] = length-i;  
+    } 
+  return arr;
+}
+int * makeRandom(int length){
+  int* arr=(int*)malloc(sizeof(int)*length);
+  int i;
+  for(i=0;i<length;i++) 
+    { 
+      arr[i] = rand();  
+    } 
+  return arr;
+}
 
-int main(int argc, char *argv[]){
-  int sorted[10]={0,1,2,3,4,5,6,7,8,9}; 
-  int reversed[10]={9,8,7,6,5,4,3,2,1,0}; 
-  int random[10]={5,8,1,3,2,9,4,7,0,6}; 
-  int random2[10]={5,8,1,3,2,9,4,7,0,6}; 
-  printf("%f\n",permutation_invertion(sorted,10,10));
-  printf("%f\n",permutation_invertion(reversed,10,10));
-  printf("%f\n",permutation_invertion(random,10,10));
+void runtime(int arr[], int length){
   clock_t begin, end;
   double time_spent;
 
   begin = clock();
-  oursort(random2,10);//give real values
+  oursort(arr,length);//give real values
+  
   end = clock();
   time_spent = (double)(end - begin) / CLOCKS_PER_SEC;  
   printf("%f\n",time_spent);
+  free(arr);
+
+}
+int main(int argc, char *argv[]){
+  int sorted[10]={0,1,2,3,4,5,6,7,8,9}; 
+  int reversed[10]={9,8,7,6,5,4,3,2,1,0}; 
+  int random[10]={5,8,1,3,2,9,4,7,0,6}; 
+  printf("%f\n",permutation_invertion(sorted,10,10));
+  printf("%f\n",permutation_invertion(reversed,10,10));
+  printf("%f\n",permutation_invertion(random,10,10));
+  int size=10000000;
+  runtime(makeOrdered(size),size);
+  runtime(makeReversed(size),size);
+  runtime(makeRandom(size),size);
   return 0;
 }
 
