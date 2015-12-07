@@ -2,6 +2,7 @@
 #include <math.h>
 #include <time.h>
 #include <stdlib.h>
+#include <string.h>
 float permutation_invertion (int arr[], int length,int size){
   int i;
   int step = length/size;
