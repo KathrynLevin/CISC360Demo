@@ -167,7 +167,46 @@ void runtime(int arr[], int length){
   
   end = clock();
   time_spent = (double)(end - begin) / CLOCKS_PER_SEC;  
-  printf("%f\n",time_spent);
+  printf("Using Our meta sorting took %f seconds \n",time_spent);
+  free(arr);
+
+}
+void runtimeISort(int arr[], int length){
+  clock_t begin, end;
+  double time_spent;
+
+  begin = clock();
+  insertion_sort(arr,length);
+  
+  end = clock();
+  time_spent = (double)(end - begin) / CLOCKS_PER_SEC;  
+  printf("Using Insertion sort took %f seconds\n",time_spent);
+  free(arr);
+
+}
+void runtimeShell(int arr[], int length){
+  clock_t begin, end;
+  double time_spent;
+
+  begin = clock();
+  ShellSort(arr,length);
+  
+  end = clock();
+  time_spent = (double)(end - begin) / CLOCKS_PER_SEC;  
+  printf("Using Shell Sort took %f seconds\n",time_spent);
+  free(arr);
+
+}
+void runtimeHeap(int arr[], int length){
+  clock_t begin, end;
+  double time_spent;
+
+  begin = clock();
+  heapsort(arr,length);
+  
+  end = clock();
+  time_spent = (double)(end - begin) / CLOCKS_PER_SEC;  
+  printf("Using Heap Sort took %f second \n",time_spent);
   free(arr);
 
 }
@@ -175,13 +214,65 @@ int main(int argc, char *argv[]){
   int sorted[10]={0,1,2,3,4,5,6,7,8,9}; 
   int reversed[10]={9,8,7,6,5,4,3,2,1,0}; 
   int random[10]={5,8,1,3,2,9,4,7,0,6}; 
-  printf("%f\n",permutation_invertion(sorted,10,10));
-  printf("%f\n",permutation_invertion(reversed,10,10));
-  printf("%f\n",permutation_invertion(random,10,10));
+  printf("Small sample of permutation invertion for sorted %f\n",permutation_invertion(sorted,10,10));
+  printf("Small sample of permutation invertion for reversed %f\n",permutation_invertion(reversed,10,10));
+  printf("Small sample of permutation invertion for random %f\n",permutation_invertion(random,10,10));
   int size=10000000;
-  runtime(makeOrdered(size),size);
-  runtime(makeReversed(size),size);
-  runtime(makeRandom(size),size);
+  int * ORDER =makeOrdered(size);
+  int * REV = makeReversed(size);
+  int * RAND = makeRandom(size);
+  int * order;
+  int * rev;
+  int * rand;
+  order=(int *) memcpy(malloc(sizeof(int)*size),ORDER,sizeof(int)*size);
+  printf("\n\nSorted: ");
+  runtimeISort(order,size);
+  if (size<10000){
+    
+    rev=(int *) memcpy(malloc(sizeof(int)*size),REV,sizeof(int)*size);
+    rand=(int *) memcpy(malloc(sizeof(int)*size),RAND,sizeof(int)*size);
+ 
+    runtimeISort(rev,size);
+    runtimeISort(rand,size);}
+  else{
+    printf("Reversed: Using Insertion sort ARRAY WILL TAKE TOO LONG\n");
+    printf("Rabdom: Using Insertion sort ARRAY WILL TAKE TOO LONG\n");
+  }  
+  order=(int *) memcpy(malloc(sizeof(int)*size),ORDER,sizeof(int)*size);
+  rev=(int *) memcpy(malloc(sizeof(int)*size),REV,sizeof(int)*size);
+  rand=(int *) memcpy(malloc(sizeof(int)*size),RAND,sizeof(int)*size);
+ 
+
+  printf("\n\nSorted: ");
+  runtimeShell((int *)order,size);
+  printf("Revered: ");
+  runtimeShell(rev,size);
+  printf("Random: ");
+  runtimeShell(rand,size);
+  order=(int *) memcpy(malloc(sizeof(int)*size),ORDER,sizeof(int)*size);
+  rev=(int *) memcpy(malloc(sizeof(int)*size),REV,sizeof(int)*size);
+  rand=(int *) memcpy(malloc(sizeof(int)*size),RAND,sizeof(int)*size);
+ 
+  printf("\n\nSorted: ");
+  runtimeHeap(order,size);
+  printf("Reversed: ");
+  runtimeHeap(rev,size);
+  printf("Random: ");
+  runtimeHeap(rand,size);
+
+  order=(int *) memcpy(malloc(sizeof(int)*size),ORDER,sizeof(int)*size);
+  rev=(int *) memcpy(malloc(sizeof(int)*size),REV,sizeof(int)*size);
+  rand=(int *) memcpy(malloc(sizeof(int)*size),RAND,sizeof(int)*size);
+
+  printf("\n\nSorted: ");
+  runtime(order,size);
+  printf("Reversed: ");
+  runtime(rev,size);
+  printf("Random: ");
+  runtime(rand,size);
+  free(ORDER);
+  free(REV);
+  free(RAND);
   return 0;
 }
 
